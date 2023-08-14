@@ -6,16 +6,30 @@ class ProductManager {
     static id = 0;
 
     addProduct(title, descripcion, price, image, code, stock) {
-        ProductManager.id++;
-        this.products.push({
+        for (let i = 0; i < this.products.length; i++) {
+            if (this.products[i].code === code) {
+                console.log(`el codigo ${code} esta repetido`);
+                break;
+            }
+        }
+
+        const newProduct = {
             title,
             descripcion,
             price,
             image,
             code,
-            stock,
-            id: ProductManager.id,
-        });
+            stock, 
+        }
+         if (!Object.values(newProduct).includes(undefined)){
+            ProductManager.id++;
+            this.products.push({ ...newProduct,
+                id: ProductManager.id,
+            });
+         } else {
+           console.log("Todos los campos son requeridos") 
+         }
+
     }
 
     getProducts() {
@@ -33,12 +47,26 @@ class ProductManager {
 }
 
 const productos = new ProductManager();
+//primera llamada=vacia
 
 console.log(productos.getProducts());
 
-productos.addProduct('titulo1', 'descripcion1', '1500', 'imagen1', 'abc123', 5);
-productos.addProduct('titulo2', 'descripcion2', '1500', 'imagen2', 'abc124', 5);
+//agregamos los productos
+productos.addProduct('titulo1', 'descripcion1', '1000', 'imagen1', 'abc123', 5);
+productos.addProduct('titulo2', 'descripcion2', '1500', 'imagen2', 'abc124', );
 
-//console.log(productos.getProducts());
+//segunda llamada=arreglo de producto
+console.log(productos.getProducts());
+
+//validacion de CODE repetido
+productos.addProduct('titulo3', 'descripcion3', '2000', 'imagen3', 'abc124', 7);
+
+
+//busqueda de producto por ID
+productos.getProductById(2);
+
+//buscar por ID no encontrado
 
 productos.getProductById(3);
+
+
