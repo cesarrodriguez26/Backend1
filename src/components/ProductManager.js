@@ -30,6 +30,8 @@ export default class ProductManager {
         };
 
         getProducts = async () => {
+            let respuesta2 = await this.readProducts();
+            return console.log(respuesta2);
 
         };
 
